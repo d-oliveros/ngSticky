@@ -20,6 +20,7 @@ angular.module('sticky', [])
 				//
 				$elem.css('top', offsetTop+'px');
 
+
 				// Get the sticky line
 				//
 				function setInitial(){
@@ -39,10 +40,19 @@ angular.module('sticky', [])
 					}
 				}
 
+
+				// Handle the resize event
+				//
+				function resize(){
+					$elem.css('position', initialPositionStyle);
+					$timeout(setInitial);
+				}
+
+
 				// Attach our listeners
 				//
 				$window.on('scroll', checkSticky);
-				$window.on('resize', setInitial);
+				$window.on('resize', resize);
 				
 				setInitial();
 			});

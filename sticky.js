@@ -20,12 +20,9 @@ angular.module('sticky', [])
 				//
 				$elem.css('top', offsetTop+'px');
 
-
-				console.log(initialPositionStyle);
 				// Get the sticky line
 				//
 				function setInitial(){
-					console.log($elem[0].offsetTop);
 					stickyLine = $elem[0].offsetTop - offsetTop;
 					checkSticky();
 				}

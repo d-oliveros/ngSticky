@@ -1,15 +1,16 @@
-angular.module('doSticky', [])
+angular.module('sticky', [])
 
 .directive('sticky', function(){
 	return {
 		restrict: 'A',
 		scope: {
-			offsetTop: '@',
+			offset: '@',
 		},
 		link: function($scope, $elem, $attrs){
-			var offsetTop = $scope.offsetTop || 20,
+			var offsetTop = $scope.offset || 0,
 				$window = angular.element(window),
 				doc = document.documentElement,
+				initialPositionStyle = $elem.css('position'),
 				stickyLine,
 				scrollTop;
 
@@ -21,7 +22,7 @@ angular.module('doSticky', [])
 			// Get the sticky line
 			//
 			function setInitial(){
-				$elem.removeClass('sticky');
+				$elem.css('position', initialPositionStyle);
 				stickyLine = $elem[0].offsetTop - offsetTop;
 				checkSticky();
 			}
@@ -32,9 +33,9 @@ angular.module('doSticky', [])
 				scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
 
 				if ( scrollTop >= stickyLine ){
-					$elem.addClass('sticky');
+					$elem.css('position', 'fixed');
 				} else {
-					$elem.removeClass('sticky');
+					$elem.css('position', initialPositionStyle);
 				}
 			}
 

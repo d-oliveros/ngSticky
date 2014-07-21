@@ -21,6 +21,12 @@ angular.module('sticky', [])
 				//
 				$elem.css('top', offsetTop+'px');
 
+				// Just for identify if the sticky element has a fixed width defined
+				//
+				var noWidth = true;
+				if ($elem[0].attributes.style.value.indexOf('width') == 0) {
+					noWidth = false;
+				}
 
 				// Get the sticky line
 				//
@@ -46,6 +52,13 @@ angular.module('sticky', [])
 				// Handle the resize event
 				//
 				function resize(){
+					if (noWidth) {
+						var parent = window.getComputedStyle($elem[0].parentElement, null);
+						initialWidthStyle = $elem[0].parentElement.offsetWidth
+							- parent.getPropertyValue('padding-right').replace("px", "")
+							- parent.getPropertyValue('padding-left').replace("px", "");
+						$elem.css("width", initialWidthStyle);
+					}
 					$elem.css('position', initialPositionStyle);
 					$timeout(setInitial);
 				}

@@ -12,7 +12,7 @@ angular.module('sticky', [])
 					$window = angular.element(window),
 					doc = document.documentElement,
 					initialPositionStyle = $elem.css('position'),
-					initialWitdhStyle = $elem[0].offsetWidth,
+					initialWidthStyle = $elem[0].offsetWidth,
 					stickyLine,
 					scrollTop;
 
@@ -42,7 +42,7 @@ angular.module('sticky', [])
 
 					if ( scrollTop >= stickyLine ){
 						$elem.css('position', 'fixed');
-						$elem.css('width', initialWitdhStyle);
+						$elem.css('width', initialWidthStyle);
 					} else {
 						$elem.css('position', initialPositionStyle);
 					}

@@ -15,7 +15,7 @@ A simple, pure javascript (No jQuery required!) AngularJS directive to make elem
 Install with bower with:
 
 ```bash
-bower install ngSmoothScroll
+bower install ngSticky
 ```
 
 

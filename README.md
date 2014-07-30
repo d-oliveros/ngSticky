@@ -20,4 +20,13 @@ To make the element stick within a certain offset of the top of the screen, you 
 
     <div sticky offset="100"> I won't touch the top of your screen! </div>
 
+
+# Bower
+
+Install with bower with:
+
+```bash
+bower install ngSmoothScroll
+```
+
 Cheers.

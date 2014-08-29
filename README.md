@@ -30,5 +30,9 @@ To make the element stick within a certain offset of the top of the screen, you 
 
     <div sticky offset="100"> I won't touch the top of your screen! </div>
     
+If you want to customize the style while the element is sticky, we have an api for you too:
+
+    <div sticky offset="100" sticky-class="imSoSticky"> Taste my gule! </div>
+    
     
 Cheers.

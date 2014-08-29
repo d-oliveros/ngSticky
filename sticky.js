@@ -5,10 +5,12 @@ angular.module('sticky', [])
 		restrict: 'A',
 		scope: {
 			offset: '@',
+			stickyClass: '@'
 		},
 		link: function($scope, $elem, $attrs){
 			$timeout(function(){
 				var offsetTop = $scope.offset || 0,
+					stickyClass = $scope.stickyClass || '',
 					$window = angular.element(window),
 					doc = document.documentElement,
 					initialPositionStyle = $elem.css('position'),
@@ -34,8 +36,10 @@ angular.module('sticky', [])
 					scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
 
 					if ( scrollTop >= stickyLine ){
+						$elem.addClass(stickyClass);
 						$elem.css('position', 'fixed');
 					} else {
+						$elem.removeClass(stickyClass);
 						$elem.css('position', initialPositionStyle);
 					}
 				}

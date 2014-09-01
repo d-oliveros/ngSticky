@@ -7,13 +7,15 @@ angular.module('sticky', [])
 			offset: '@',
 		},
 		link: function($scope, $elem, $attrs){
-			$timeout(function(){
-				var offsetTop = $scope.offset || 0,
-					$window = angular.element(window),
-					doc = document.documentElement,
-					initialPositionStyle = $elem.css('position'),
+			$timeout(function() {
+			    var offsetTop = $scope.offset || 0,
+			        $window = angular.element(window),
+			        doc = document.documentElement,
+			        initialPositionStyle = $elem.css('position'),
+			        initialLeft = $elem.css('left'),
 					stickyLine,
-					scrollTop;
+					scrollTop,
+				    left;
 
 
 				// Set the top offset
@@ -23,9 +25,11 @@ angular.module('sticky', [])
 
 				// Get the sticky line
 				//
-				function setInitial(){
+				function setInitial() {
+				    console.log($elem[0]);
 					stickyLine = $elem[0].offsetTop - offsetTop;
 					checkSticky();
+					left = $elem[0].offsetLeft + $elem[0].clientWidth;
 				}
 
 				// Check if the window has passed the sticky line
@@ -34,9 +38,11 @@ angular.module('sticky', [])
 					scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
 
 					if ( scrollTop >= stickyLine ){
-						$elem.css('position', 'fixed');
+					    $elem.css('position', 'fixed');
+					    $elem.css('left', left + 'px');
 					} else {
-						$elem.css('position', initialPositionStyle);
+					    $elem.css('position', initialPositionStyle);
+					    $elem.css('left', initialLeft);
 					}
 				}
 

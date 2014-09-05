@@ -26,7 +26,6 @@ angular.module('sticky', [])
 				//
 				function setInitial(){
 					stickyLine = $elem[0].offsetTop - offsetTop;
-					$elem.css('width', '100%');
 					initialWidth = $elem.css('width');
 					checkSticky();
 				}

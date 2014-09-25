@@ -36,11 +36,15 @@ angular.module('sticky', [])
 					scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
 
 					if ( scrollTop >= stickyLine ){
+						if (!$elem.hasClass(stickyClass)) {
+							document.body.style.paddingTop = parseInt(window.getComputedStyle(document.body)['padding-top']) + $elem[0].offsetHeight + 'px';
+						}
 						$elem.addClass(stickyClass);
 						$elem.css('position', 'fixed');
 					} else {
 						$elem.removeClass(stickyClass);
 						$elem.css('position', initialPositionStyle);
+						document.body.style.paddingTop = parseInt(window.getComputedStyle(document.body)['padding-top']) - $elem[0].offsetHeight + 'px';
 					}
 				}
 

@@ -27,9 +27,9 @@ angular.module('sticky', [])
 					// Get the sticky line
 					//
 					function setInitial() {
-						stickyLine = $elem[0].offsetTop - offsetTop;
+					    stickyLine = $elem[0].offsetTop - offsetTop;
+					    left = $elem[0].offsetLeft + $elem[0].clientWidth;
 						checkSticky();
-						left = $elem[0].offsetLeft + $elem[0].clientWidth;
 					}
 
 					// Check if the window has passed the sticky line

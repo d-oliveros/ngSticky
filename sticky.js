@@ -5,14 +5,17 @@ angular.module('sticky', [])
 		restrict: 'A',
 		scope: {
 			offset: '@',
-			stickyClass: '@'
+			stickyClass: '@',
+			bodyClass: '@'
 		},
 		link: function($scope, $elem, $attrs){
 			$timeout(function(){
 				var offsetTop = $scope.offset || 0,
 					stickyClass = $scope.stickyClass || '',
+					bodyClass = $scope.bodyClass || '',
 					$window = angular.element(window),
 					doc = document.documentElement,
+					body = angular.element(document.body),
 					initialPositionStyle = $elem.css('position'),
 					stickyLine,
 					scrollTop;
@@ -38,9 +41,11 @@ angular.module('sticky', [])
 					if ( scrollTop >= stickyLine ){
 						$elem.addClass(stickyClass);
 						$elem.css('position', 'fixed');
+						body.addClass(bodyClass);
 					} else {
 						$elem.removeClass(stickyClass);
 						$elem.css('position', initialPositionStyle);
+						body.removeClass(bodyClass);
 					}
 				}
 
@@ -57,7 +62,7 @@ angular.module('sticky', [])
 				//
 				$window.on('scroll', checkSticky);
 				$window.on('resize', resize);
-				
+
 				setInitial();
 			});
 		},

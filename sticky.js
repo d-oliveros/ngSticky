@@ -52,12 +52,19 @@ angular.module('sticky', [])
 					$timeout(setInitial);
 				}
 
+				// Remove the listeners when the scope is destroyed
+				//
+				function onDestroy(){
+					$window.off('scroll', checkSticky);
+					$window.off('resize', resize);
+				}
 
 				// Attach our listeners
 				//
+				$scope.$on('$destroy', onDestroy);
 				$window.on('scroll', checkSticky);
 				$window.on('resize', resize);
-				
+
 				setInitial();
 			});
 		},

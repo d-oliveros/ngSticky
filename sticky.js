@@ -1,3 +1,14 @@
+window.matchMedia || (window.matchMedia = function() {
+	window.console && console.warn('angular-sticky: this browser does not support matchMedia, '+
+				'therefore the minWidth option will not work on this browser. '+
+				'Polyfill matchMedia to fix this issue.');
+	return function() {
+		return {
+			matches: true
+		};
+	};
+}());
+
 angular.module('sticky', [])
 
 .directive('sticky', ['$timeout', function($timeout){
@@ -5,12 +16,14 @@ angular.module('sticky', [])
 		restrict: 'A',
 		scope: {
 			offset: '@',
-			stickyClass: '@'
+			stickyClass: '@',
+			mediaQuery: '@'
 		},
 		link: function($scope, $elem, $attrs){
 			$timeout(function(){
 				var offsetTop = $scope.offset || 0,
 					stickyClass = $scope.stickyClass || '',
+					mediaQuery = $scope.mediaQuery || 'min-width: 0',
 					$window = angular.element(window),
 					doc = document.documentElement,
 					initialPositionStyle = $elem.css('position'),
@@ -35,7 +48,7 @@ angular.module('sticky', [])
 				function checkSticky(){
 					scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
 
-					if ( scrollTop >= stickyLine ){
+					if ( scrollTop >= stickyLine && matchMedia('('+ mediaQuery +')').matches ){
 						$elem.addClass(stickyClass);
 						$elem.css('position', 'fixed');
 					} else {

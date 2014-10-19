@@ -27,6 +27,7 @@ angular.module('sticky', [])
 					$window = angular.element(window),
 					doc = document.documentElement,
 					initialPositionStyle = $elem.css('position'),
+					initialWidthStyle = $elem[0].offsetWidth,
 					stickyLine,
 					scrollTop;
 
@@ -35,6 +36,12 @@ angular.module('sticky', [])
 				//
 				$elem.css('top', offsetTop+'px');
 
+				// Just for identify if the sticky element has a fixed width defined
+				//
+				var noWidth = true;
+				if ($elem[0].attributes.style.value.indexOf('width') == 0) {
+					noWidth = false;
+				}
 
 				// Get the sticky line
 				//
@@ -51,6 +58,7 @@ angular.module('sticky', [])
 					if ( scrollTop >= stickyLine && matchMedia('('+ mediaQuery +')').matches ){
 						$elem.addClass(stickyClass);
 						$elem.css('position', 'fixed');
+						$elem.css('width', initialWidthStyle);
 					} else {
 						$elem.removeClass(stickyClass);
 						$elem.css('position', initialPositionStyle);
@@ -61,6 +69,13 @@ angular.module('sticky', [])
 				// Handle the resize event
 				//
 				function resize(){
+					if (noWidth) {
+						var parent = window.getComputedStyle($elem[0].parentElement, null);
+						initialWidthStyle = $elem[0].parentElement.offsetWidth
+							- parent.getPropertyValue('padding-right').replace("px", "")
+							- parent.getPropertyValue('padding-left').replace("px", "");
+						$elem.css("width", initialWidthStyle);
+					}
 					$elem.css('position', initialPositionStyle);
 					$timeout(setInitial);
 				}

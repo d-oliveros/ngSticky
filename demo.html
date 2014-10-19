@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <title>angular-sticky demo</title>
+    <style>
+    body {
+        padding: 0;
+        margin: 0;
+        background-image: url(http://www.georgebenainous.com/web/code/layout_grid.gif);
+        font-family: sans-serif;
+    }
+    .sticky-box {
+        width: 200px;
+        height: 200px;
+        color: #fff;
+    }
+    </style>
+</head>
+<body ng-app="demo" style="min-height: 2000px;">
+    <div class="sticky-box" style="background-color: blue; margin: 50px;" sticky media-query="min-width: 768px">
+        margin: 50px;
+    </div>
+    <div class="sticky-box" style="background-color: orange; margin: 50px;" sticky offset="250">
+        margin: 50px;
+    </div>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+    <script src="sticky.js"></script>
+    <script>
+        angular.module('demo', ['sticky']);
+    </script>
+</body>
+</html>

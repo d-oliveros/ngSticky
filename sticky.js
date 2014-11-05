@@ -36,7 +36,6 @@ angular.module('sticky', [])
 					isSticky,
 					isPositionFixed;
 
-
 				// Set the top offset
 				//
 				$elem.css('top', offsetTop+'px');
@@ -51,7 +50,12 @@ angular.module('sticky', [])
 				// Get the sticky line
 				//
 				function setInitial(){
-					stickyLine = $elem[0].offsetTop - offsetTop;
+					// Cannot use offsetTop, because this gets
+					// the Y position relative to the nearest parent
+					// which is positioned (position: absolute, relative).
+					// Instead, use Element.getBoundingClientRect():
+					// https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
+					stickyLine = $elem[0].getBoundingClientRect().top - offsetTop;
 					checkSticky();
 				}
 
@@ -104,6 +108,6 @@ angular.module('sticky', [])
 
 				setInitial();
 			});
-		},
+		}
 	};
 }]);

@@ -23,7 +23,6 @@
 			var mediaQuery  = scope.mediaQuery  || null,
 				stickyClass = scope.stickyClass || '',
 				bodyClass   = scope.bodyClass   || '',
-				offsetTop   = scope.offset      || 0,
 
 				$elem   = elem, elem = $elem[0],
 				$window = angular.element(window),
@@ -42,6 +41,12 @@
 				isSticking = false,
 				stickyLine;
 
+			if ( !scope.offset || isNaN(scope.offset) ) {
+				scope.offset = 0;
+			} else {
+				scope.offset = parseInt(scope.offset);
+			}
+
 			// Watchers
 			//
 			scope.$watch( function() {
@@ -49,13 +54,15 @@
 				// cannot use offsetTop, because this gets
 				// the Y position relative to the nearest parent
 				// which is positioned (position: absolute, relative).
-				// Instead, use Element.getBoundingClientRect():
-				// https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
-				stickyLine = elem.getBoundingClientRect().top - offsetTop;
-				return stickyLine;
+				// --Instead, use Element.getBoundingClientRect():
+				// --https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
+				// ++Instead, do it manually
+				return _getTopOffset(elem);
 
-			}, function(oldVal, newVal) {
-				if (oldVal !== newVal ) {
+			}, function(newVal, oldVal) {
+
+				if ( newVal !== oldVal || typeof stickyLine === 'undefined' ) {
+					stickyLine = newVal + (scope.offset ? scope.offset : 0);
 					checkIfShouldStick();
 				}
 			});
@@ -82,7 +89,7 @@
 
 				$elem
 					.css('position', 'fixed')
-					.css('top',      offsetTop+'px')
+					.css('top',      '0px')
 					.css('width',    initial.offsetWidth)
 					.css('margin-top',   0);
 
@@ -99,6 +106,19 @@
 					.css('margin-top',   initial.marginTop);
 			};
 
+			function _getTopOffset (element) {
+				var pixels = 0;
+
+				if (element.offsetParent) {
+					do {
+						pixels += element.offsetTop;
+						element = element.offsetParent;
+					} while (element);
+				}
+
+				return pixels;
+			}
+
 
 			// Listeners
 			//
@@ -110,7 +130,7 @@
 				if ( !initial.width ) {
 
 					var parent = window.getComputedStyle(elem.parentElement, null);
-					initialOffsetWidth = elem.parentElement.offsetWidth
+					var initialOffsetWidth = elem.parentElement.offsetWidth
 						- parent.getPropertyValue('padding-right').replace("px", "")
 						- parent.getPropertyValue('padding-left').replace("px", "");
 					$elem.css("width", initialOffsetWidth);

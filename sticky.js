@@ -17,15 +17,18 @@ angular.module('sticky', [])
 		scope: {
 			offset: '@',
 			stickyClass: '@',
-			mediaQuery: '@'
+			mediaQuery: '@',
+			bodyClass: '@'
 		},
 		link: function($scope, $elem, $attrs){
 			$timeout(function(){
 				var offsetTop = $scope.offset || 0,
 					stickyClass = $scope.stickyClass || '',
 					mediaQuery = $scope.mediaQuery || 'min-width: 0',
+					bodyClass = $scope.bodyClass || '',
 					$window = angular.element(window),
 					doc = document.documentElement,
+					body = angular.element(document.body),
 					initialPositionStyle = $elem.css('position'),
 					initialWidthStyle = $elem[0].offsetWidth,
 					stickyLine,
@@ -62,10 +65,12 @@ angular.module('sticky', [])
 					if (isSticky && !isPositionFixed){
 						$elem.addClass(stickyClass);
 						$elem.css('position', 'fixed');
+						body.addClass(bodyClass);
 						$elem.css('width', initialWidthStyle);
 					} else if (!isSticky && isPositionFixed) {
 						$elem.removeClass(stickyClass);
 						$elem.css('position', initialPositionStyle);
+						body.removeClass(bodyClass);
 					}
 				}
 

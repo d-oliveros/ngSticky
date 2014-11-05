@@ -34,6 +34,10 @@ If you want to customize the style while the element is sticky, we have an api f
 
     <div sticky offset="100" sticky-class="imSoSticky"> Taste my gule! </div>
 
+And if you want to customize the body style while the element is sticky:
+
+    <div sticky offset="100" body-class="somethingIsSticky"> Taste my gule! </div>
+
 In order to enable sticky based on a media query:
 
     <div sticky media-query="min-width: 768px"> Won't be sticky on small screens! </div>

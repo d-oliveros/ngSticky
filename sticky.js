@@ -1,113 +1,141 @@
-window.matchMedia || (window.matchMedia = function() {
-	window.console && console.warn('angular-sticky: this browser does not support matchMedia, '+
-				'therefore the minWidth option will not work on this browser. '+
-				'Polyfill matchMedia to fix this issue.');
-	return function() {
-		return {
-			matches: true
+(function () {
+
+	var module = angular.module('sticky', []);
+
+	// Shiv: matchMedia
+	//
+	window.matchMedia || (window.matchMedia = function() {
+		window.console && console.warn && console.warn('angular-sticky: This browser does not support matchMedia, '+
+			'therefore the minWidth option will not work on this browser. '+
+			'Polyfill matchMedia to fix this issue.');
+		return function() {
+			return {
+				matches: true
+			};
 		};
-	};
-}());
+	}());
 
-angular.module('sticky', [])
+	// Directive: sticky
+	//
+	module.directive('sticky', function() {
 
-.directive('sticky', ['$timeout', function($timeout){
-	return {
-		restrict: 'A',
-		scope: {
-			offset: '@',
-			stickyClass: '@',
-			mediaQuery: '@',
-			bodyClass: '@'
-		},
-		link: function($scope, $elem, $attrs){
-			$timeout(function(){
-				var offsetTop = $scope.offset || 0,
-					stickyClass = $scope.stickyClass || '',
-					mediaQuery = $scope.mediaQuery || 'min-width: 0',
-					bodyClass = $scope.bodyClass || '',
-					$window = angular.element(window),
-					doc = document.documentElement,
-					body = angular.element(document.body),
-					initialPositionStyle = $elem.css('position'),
-					initialWidthStyle = $elem[0].offsetWidth,
-					stickyLine,
-					scrollTop,
-					isSticky,
-					isPositionFixed;
+		var linkFn = function(scope , elem, attrs) {
+			var mediaQuery  = scope.mediaQuery  || null,
+				stickyClass = scope.stickyClass || '',
+				bodyClass   = scope.bodyClass   || '',
+				offsetTop   = scope.offset      || 0,
 
-				// Set the top offset
-				//
-				$elem.css('top', offsetTop+'px');
+				$elem   = elem, elem = $elem[0],
+				$window = angular.element(window),
+				$body   = angular.element(document.body),
+				doc     = document.documentElement,
 
-				// Just for identify if the sticky element has a fixed width defined
-				//
-				var noWidth = true;
-				if ($elem[0].attributes.style.value.indexOf('width') == 0) {
-					noWidth = false;
+				initial = {
+					offsetWidth: elem.offsetWidth,
+					top: $elem.css('top'),
+					width: $elem.css('width'),
+					position: $elem.css('position'),
+					marginTop: $elem.css('margin-top'),
+				},
+
+				isPositionFixed = false,
+				isSticking = false,
+				stickyLine;
+
+			// Watchers
+			//
+			scope.$watch( function() {
+				
+				// cannot use offsetTop, because this gets
+				// the Y position relative to the nearest parent
+				// which is positioned (position: absolute, relative).
+				// Instead, use Element.getBoundingClientRect():
+				// https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
+				stickyLine = elem.getBoundingClientRect().top - offsetTop;
+				return stickyLine;
+
+			}, function(oldVal, newVal) {
+				if (oldVal !== newVal ) {
+					checkIfShouldStick();
 				}
-
-				// Get the sticky line
-				//
-				function setInitial(){
-					// Cannot use offsetTop, because this gets
-					// the Y position relative to the nearest parent
-					// which is positioned (position: absolute, relative).
-					// Instead, use Element.getBoundingClientRect():
-					// https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
-					stickyLine = $elem[0].getBoundingClientRect().top - offsetTop;
-					checkSticky();
-				}
-
-				// Check if the window has passed the sticky line
-				//
-				function checkSticky(){
-					scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-					isSticky = scrollTop >= stickyLine && matchMedia('('+ mediaQuery +')').matches;
-					isPositionFixed = $elem.css('position') == 'fixed';
-
-					if (isSticky && !isPositionFixed){
-						$elem.addClass(stickyClass);
-						$elem.css('position', 'fixed');
-						body.addClass(bodyClass);
-						$elem.css('width', initialWidthStyle);
-					} else if (!isSticky && isPositionFixed) {
-						$elem.removeClass(stickyClass);
-						$elem.css('position', initialPositionStyle);
-						body.removeClass(bodyClass);
-					}
-				}
-
-
-				// Handle the resize event
-				//
-				function resize(){
-					if (noWidth) {
-						var parent = window.getComputedStyle($elem[0].parentElement, null);
-						initialWidthStyle = $elem[0].parentElement.offsetWidth
-							- parent.getPropertyValue('padding-right').replace("px", "")
-							- parent.getPropertyValue('padding-left').replace("px", "");
-						$elem.css("width", initialWidthStyle);
-					}
-					$elem.css('position', initialPositionStyle);
-					$timeout(setInitial);
-				}
-
-				// Remove the listeners when the scope is destroyed
-				//
-				function onDestroy(){
-					$window.off('scroll', checkSticky);
-					$window.off('resize', resize);
-				}
-
-				// Attach our listeners
-				//
-				$scope.$on('$destroy', onDestroy);
-				$window.on('scroll', checkSticky);
-				$window.on('resize', resize);
-
-				setInitial();
 			});
-		}
-	};
-}]);
+
+			// checks if the window has passed the sticky line
+			function checkIfShouldStick() {
+				if ( mediaQuery && !matchMedia('('+mediaQuery+')').matches) return;
+
+				var scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+				var shouldStick = scrollTop >=  stickyLine;
+
+				// Switch the sticky modes if the element has crossed the sticky line
+				if ( shouldStick && !isSticking )
+					stickElement();
+						
+				else if ( !shouldStick && isSticking )
+					unstickElement();
+			}
+
+			function stickElement() {
+				isSticking = true;
+				bodyClass   && $body.addClass(bodyClass);
+				stickyClass && $elem.addClass(stickyClass);
+
+				$elem
+					.css('position', 'fixed')
+					.css('top',      offsetTop+'px')
+					.css('width',    initial.offsetWidth)
+					.css('margin-top',   0);
+
+			};
+
+			function unstickElement() {
+				isSticking = false;
+				bodyClass   && $body.removeClass(bodyClass);
+				stickyClass && $elem.removeClass(stickyClass);
+
+				$elem
+					.css('top',      initial.top)
+					.css('position', initial.position)
+					.css('margin-top',   initial.marginTop);
+			};
+
+
+			// Listeners
+			//
+			$window.on('scroll',  checkIfShouldStick);
+			$window.on('resize',  onResize);
+			scope.$on('$destroy', onDestroy);
+
+			function onResize() {
+				if ( !initial.width ) {
+
+					var parent = window.getComputedStyle(elem.parentElement, null);
+					initialOffsetWidth = elem.parentElement.offsetWidth
+						- parent.getPropertyValue('padding-right').replace("px", "")
+						- parent.getPropertyValue('padding-left').replace("px", "");
+					$elem.css("width", initialOffsetWidth);
+
+				}
+			};
+
+			function onDestroy() {
+				$window.off('scroll', checkIfShouldStick);
+				$window.off('resize', onResize);
+			};
+		};
+
+
+		// Directive definition
+		//
+		return {
+			scope: {
+				offset: '@',      // top offset
+				mediaQuery: '@',  // minimum width required for sticky to come in
+				stickyClass: '@', // class to be applied to the element on sticky
+				bodyClass: '@'    // class to be applied to the body on sticky
+			},
+			restrict: 'A',        // sticky can only be used as an ('A') attribute.
+			link: linkFn
+		};
+	});
+}());

@@ -29,7 +29,9 @@ angular.module('sticky', [])
 					initialPositionStyle = $elem.css('position'),
 					initialWidthStyle = $elem[0].offsetWidth,
 					stickyLine,
-					scrollTop;
+					scrollTop,
+					isSticky,
+					isPositionFixed;
 
 
 				// Set the top offset
@@ -54,12 +56,14 @@ angular.module('sticky', [])
 				//
 				function checkSticky(){
 					scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+					isSticky = scrollTop >= stickyLine && matchMedia('('+ mediaQuery +')').matches;
+					isPositionFixed = $elem.css('position') == 'fixed';
 
-					if ( scrollTop >= stickyLine && matchMedia('('+ mediaQuery +')').matches ){
+					if (isSticky && !isPositionFixed){
 						$elem.addClass(stickyClass);
 						$elem.css('position', 'fixed');
 						$elem.css('width', initialWidthStyle);
-					} else {
+					} else if (!isSticky && isPositionFixed) {
 						$elem.removeClass(stickyClass);
 						$elem.css('position', initialPositionStyle);
 					}

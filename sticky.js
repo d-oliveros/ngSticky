@@ -41,28 +41,23 @@
 				isSticking = false,
 				stickyLine;
 
-			if ( !scope.offset || isNaN(scope.offset) ) {
-				scope.offset = 0;
-			} else {
-				scope.offset = parseInt(scope.offset);
-			}
+			var offset = typeof scope.offset === 'string'
+				? parseInt( scope.offset.replace(/px;?/, '') )
+				: 0;
 
 			// Watchers
 			//
+			var prevOffset = _getTopOffset(elem);
+
 			scope.$watch( function() {
-				
-				// cannot use offsetTop, because this gets
-				// the Y position relative to the nearest parent
-				// which is positioned (position: absolute, relative).
-				// --Instead, use Element.getBoundingClientRect():
-				// --https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
-				// ++Instead, do it manually
-				return _getTopOffset(elem);
+				if ( isSticking ) return prevOffset;
+
+				prevOffset = _getTopOffset(elem);
+				return prevOffset;
 
 			}, function(newVal, oldVal) {
-
 				if ( newVal !== oldVal || typeof stickyLine === 'undefined' ) {
-					stickyLine = newVal + (scope.offset ? scope.offset : 0);
+					stickyLine = newVal - offset;
 					checkIfShouldStick();
 				}
 			});
@@ -89,7 +84,7 @@
 
 				$elem
 					.css('position', 'fixed')
-					.css('top',      '0px')
+					.css('top',      offset+'px')
 					.css('width',    initial.offsetWidth)
 					.css('margin-top',   0);
 
@@ -123,7 +118,7 @@
 			// Listeners
 			//
 			$window.on('scroll',  checkIfShouldStick);
-			$window.on('resize',  onResize);
+			$window.on('resize',  scope.$apply.bind(scope, onResize));
 			scope.$on('$destroy', onDestroy);
 
 			function onResize() {

@@ -83,9 +83,9 @@
 				stickyClass && $elem.addClass(stickyClass);
 
 				$elem
+					.css('width',    elem.offsetWidth+'px')
 					.css('position', 'fixed')
 					.css('top',      offset+'px')
-					.css('width',    initial.offsetWidth)
 					.css('margin-top',   0);
 
 			};
@@ -96,6 +96,7 @@
 				stickyClass && $elem.removeClass(stickyClass);
 
 				$elem
+					.css('width', initial.width ? initial.width : '')
 					.css('top',      initial.top)
 					.css('position', initial.position)
 					.css('margin-top',   initial.marginTop);
@@ -128,7 +129,7 @@
 					var initialOffsetWidth = elem.parentElement.offsetWidth
 						- parent.getPropertyValue('padding-right').replace("px", "")
 						- parent.getPropertyValue('padding-left').replace("px", "");
-					$elem.css("width", initialOffsetWidth);
+					$elem.css("width", initialOffsetWidth+"px");
 
 				}
 			};

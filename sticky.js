@@ -30,7 +30,6 @@
 				doc     = document.documentElement,
 
 				initial = {
-					offsetWidth: elem.offsetWidth,
 					top: $elem.css('top'),
 					width: $elem.css('width'),
 					position: $elem.css('position'),
@@ -78,6 +77,7 @@
 			}
 
 			function stickElement() {
+				initial.offsetWidth = elem.offsetWidth;
 				isSticking = true;
 				bodyClass   && $body.addClass(bodyClass);
 				stickyClass && $elem.addClass(stickyClass);
@@ -96,7 +96,7 @@
 				stickyClass && $elem.removeClass(stickyClass);
 
 				$elem
-					.css('width', initial.width ? initial.width : '')
+					.css('width',    initial.offsetWidth+'px')
 					.css('top',      initial.top)
 					.css('position', initial.position)
 					.css('margin-top',   initial.marginTop);
@@ -123,15 +123,7 @@
 			scope.$on('$destroy', onDestroy);
 
 			function onResize() {
-				if ( !initial.width ) {
-
-					var parent = window.getComputedStyle(elem.parentElement, null);
-					var initialOffsetWidth = elem.parentElement.offsetWidth
-						- parent.getPropertyValue('padding-right').replace("px", "")
-						- parent.getPropertyValue('padding-left').replace("px", "");
-					$elem.css("width", initialOffsetWidth+"px");
-
-				}
+				initial.offsetWidth = elem.offsetWidth;
 			};
 
 			function onDestroy() {

@@ -47,6 +47,19 @@
 				? parseInt( scope.offset.replace(/px;?/, '') )
 				: 0;
 
+			var anchor = typeof scope.anchor === 'string'
+				? scope.anchor.toLowerCase().trim()
+				: 'top';
+			switch (anchor) {
+				case 'top':
+				case 'bottom':
+					break;
+				default:
+					console.log('Unknown anchor ' + anchor + ', defaulting to top');
+					anchor = 'top';
+					break;
+			}
+
 			// Watchers
 			//
 			var prevOffset = _getTopOffset(elem);
@@ -54,7 +67,10 @@
 			scope.$watch( function() {
 				if ( isSticking ) return prevOffset;
 
-				prevOffset = _getTopOffset(elem);
+				prevOffset = 
+					(anchor == 'top')
+						? _getTopOffset(elem)
+						: _getBottomOffset(elem);
 				return prevOffset;
 
 			}, function(newVal, oldVal) {
@@ -68,8 +84,13 @@
 			function checkIfShouldStick() {
 				if ( mediaQuery && !matchMedia('('+mediaQuery+')').matches) return;
 
-				var scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-				var shouldStick = scrollTop >=  stickyLine;
+				if (anchor == 'top') {
+					var scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+					var shouldStick = scrollTop >=  stickyLine;
+				} else {
+					var scrollBottom = window.pageYOffset + window.innerHeight;
+					var shouldStick = scrollBottom <= stickyLine;
+				}
 
 				// Switch the sticky modes if the element has crossed the sticky line
 				if ( shouldStick && !isSticking )
@@ -90,10 +111,15 @@
 				$elem
 					.css('width',    elem.offsetWidth+'px')
 					.css('position', 'fixed')
-					.css('top',      offset+'px')
-					.css('left',     absoluteLeft)
 					.css('margin-top',   0);
 
+				if (anchor == 'bottom') {
+					$elem.css(anchor,       offset+'px')
+					$elem.css('margin-bottom', 0);
+				} else {
+					$elem.css('top', offset+'px');
+					$elem.css('left', absoluteLeft);
+				}
 			};
 
 			function unstickElement() {
@@ -102,6 +128,12 @@
 				isSticking = false;
 				bodyClass   && $body.removeClass(bodyClass);
 				stickyClass && $elem.removeClass(stickyClass);
+
+				$elem
+					.css('width',      initial.offsetWidth+'px')
+					.css('top',        initial.top)
+					.css('position',   initial.position)
+					.css('margin-top', initial.marginTop);
 			};
 
 			function _getTopOffset (element) {
@@ -115,6 +147,10 @@
 				}
 
 				return pixels;
+			}
+
+			function _getBottomOffset (element) {
+				return element.offsetTop + element.clientHeight;
 			}
 
 
@@ -139,7 +175,8 @@
 		//
 		return {
 			scope: {
-				offset: '@',      // top offset
+				anchor: '@',      // top or bottom
+				offset: '@',      // offset from the top/bottom window edge
 				mediaQuery: '@',  // minimum width required for sticky to come in
 				stickyClass: '@', // class to be applied to the element on sticky
 				bodyClass: '@'    // class to be applied to the body on sticky

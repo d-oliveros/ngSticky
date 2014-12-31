@@ -34,7 +34,10 @@
 					width: $elem.css('width'),
 					position: $elem.css('position'),
 					marginTop: $elem.css('margin-top'),
+					cssLeft: $elem.css('left'),
 				},
+
+				initialStyle = $elem.attr('style'),
 
 				isPositionFixed = false,
 				isSticking = false,
@@ -98,23 +101,30 @@
 			}
 
 			function stickElement() {
+				var rect = $elem[0].getBoundingClientRect();
+				var absoluteLeft = rect.left;
 				initial.offsetWidth = elem.offsetWidth;
 				isSticking = true;
 				bodyClass   && $body.addClass(bodyClass);
 				stickyClass && $elem.addClass(stickyClass);
 
 				$elem
-					.css('width',      elem.offsetWidth+'px')
-					.css('position',   'fixed')
-					.css(anchor,       offset+'px')
-					.css('margin-top', 0);
+					.css('width',    elem.offsetWidth+'px')
+					.css('position', 'fixed')
+					.css('margin-top',   0);
 
 				if (anchor == 'bottom') {
+					$elem.css(anchor,       offset+'px')
 					$elem.css('margin-bottom', 0);
+				} else {
+					$elem.css('top', offset+'px');
+					$elem.css('left', absoluteLeft);
 				}
 			};
 
 			function unstickElement() {
+				$elem[0].removeAttribute("style");
+				$elem.attr('style', $elem.initialStyle);
 				isSticking = false;
 				bodyClass   && $body.removeClass(bodyClass);
 				stickyClass && $elem.removeClass(stickyClass);

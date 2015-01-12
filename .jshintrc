@@ -1,0 +1,14 @@
+{
+	"eqeqeq": true,
+	"newcap": true,
+	"nonew": true,
+	"undef": true,
+	"unused": true,
+	"freeze": true,
+	"globals": {
+		"window": false,
+		"document": false,
+		"console": false,
+		"angular": false
+	}
+}

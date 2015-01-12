@@ -1,12 +1,12 @@
 {
   "name": "angular-sticky",
-  "version": "1.7.5",
+  "version": "1.7.6",
   "homepage": "https://github.com/d-oliveros/angular-sticky",
   "authors": [
     "David Oliveros <dato.oliveros@gmail.com>"
   ],
   "description": "A simple, pure javascript (No jQuery required!) AngularJS directive to make elements stick when scrolling down.",
-  "main": "sticky.js",
+  "main": "lib/sticky.js",
   "dependencies": {
     "angular": "^1.2.0",
     "matchmedia": "~0.2.0"

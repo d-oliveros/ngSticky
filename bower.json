@@ -1,7 +1,7 @@
 {
-  "name": "angular-sticky",
+  "name": "ngSticky",
   "version": "1.7.8",
-  "homepage": "https://github.com/d-oliveros/angular-sticky",
+  "homepage": "https://github.com/d-oliveros/ngSticky",
   "authors": [
     "David Oliveros <dato.oliveros@gmail.com>"
   ],
@@ -16,7 +16,11 @@
     "angular",
     "sticky",
     "fixed",
-    "position"
+    "position",
+    "angular sticky",
+    "stick windows",
+    "stick",
+    "layout"
   ],
   "license": "MIT",
   "ignore": [

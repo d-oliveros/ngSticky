@@ -18,7 +18,7 @@
 		.container {
 			float: left;
 			width: 300px;
-			height: 300px;
+			height: 400px;
 			padding: 50px;
 			border-bottom: 0px solid #AEAEAE;
 			background-color: rgba(0, 0, 0, 0.1);
@@ -30,19 +30,21 @@
 <body ng-app="demo" style="min-height: 2000px;">
 
 	<div class="container">
-		<div class="sticky-box" style="background-color: blue; margin: 50px;" media-query="min-width: 768px" sticky>
+		<div class="sticky-box" style="background-color: blue; margin: 50px;" media-query="min-width: 768px" sticky confine="true">
 			Style:<br>
 			margin: 50px;<br>
 			<br>
 			Options:<br>
-			media-query="min-width: 768px"
+			media-query="min-width: 768px"<br>
+			confine="true"
 		</div>
 	</div>
 
 	<div class="container">
-		<div class="sticky-box" style="background-color: blue;" sticky offset="25">
+		<div class="sticky-box" style="background-color: blue;" sticky offset="25" confine="true">
 			Options:<br>
 			offset="25"
+			confine="true"
 		</div>
 	</div>
 

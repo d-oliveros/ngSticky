@@ -42,4 +42,10 @@ In order to enable sticky based on a media query:
 
     <div sticky media-query="min-width: 768px"> Won't be sticky on small screens! </div>
 
+And if you want to confine an element to it's parent, and let it 'bottom out' just add the confine attribute:
+
+    <div sticky offset="100" confine="true"> Will unstick and stick to bottom of parent element</div>
+
+> NOTE: The confine attribute will automagically assign it's parent a position: relative style in order to help with absolute positioning relative to the parent.
+ 
 Cheers.

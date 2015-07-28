@@ -5,14 +5,14 @@ A simple, pure javascript (No jQuery required!) AngularJS directive to make elem
 
 ### Features
 
-  * Allows use of an offset so elements can be sticked to ej. 50px from the top of the browser
+  * Allows use of an offset so elements can be stuck to eg. 50px from the top of the browser
   * Recalculates element position on page load and on window resize
   * Clean: No classes are added, no jQuery is required, no CSS files or configuration is needed.
 
 
 ### Bower
 
-Install with bower with:
+Install with bower:
 
 ```bash
 bower install ngSticky
@@ -32,24 +32,24 @@ To make the element stick within a certain offset of the top of the screen, you 
 
 If you want to customize the style while the element is sticky, we have an api for you too:
 
-    <div sticky offset="100" sticky-class="imSoSticky"> Taste my gule! </div>
+    <div sticky offset="100" sticky-class="imSoSticky"> Taste my glue! </div>
 
 And if you want to customize the body style while the element is sticky:
 
-    <div sticky offset="100" body-class="somethingIsSticky"> Taste my gule! </div>
+    <div sticky offset="100" body-class="somethingIsSticky"> Taste my glue! </div>
 
 In order to enable sticky based on a media query:
 
     <div sticky media-query="min-width: 768px"> Won't be sticky on small screens! </div>
 
-If you want the sticky element to be scrollable only if it's smaller then the window inner height then you can set stick-limit attribute:
+If you want the sticky element to be scrollable only if it's smaller then the window inner height then you can set the `stick-limit` attribute:
 
     <div sticky offset="100" stick-limit="true"> Will stick only if the element isn't bigger then the view</div>
 
-And if you want to confine an element to it's parent, and let it 'bottom out' just add the confine attribute:
+And if you want to confine an element to its parent, and let it 'bottom out', just add the `confine` attribute:
 
     <div sticky offset="100" confine="true"> Will unstick and stick to bottom of parent element</div>
 
-> NOTE: The confine attribute will automagically assign it's parent a position: relative style in order to help with absolute positioning relative to the parent.
+> NOTE: The confine attribute will automagically assign its parent a `position: relative` style in order to help with absolute positioning relative to the parent.
 
 Cheers.

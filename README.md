@@ -7,7 +7,7 @@ A simple, pure javascript (No jQuery required!) AngularJS directive to make elem
 
   * Allows use of an offset so elements can be stuck to eg. 50px from the top of the browser
   * Recalculates element position on page load and on window resize
-  * Clean: No classes are added, no jQuery is required, no CSS files or configuration is needed.
+  * Clean: No external CSS or jQuery required, and it only adds the classes you specify.
 
 
 ### Bower

@@ -1,9 +1,10 @@
 {
   "name": "ngSticky",
-  "version": "1.7.9",
+  "version": "1.7.10",
   "homepage": "https://github.com/d-oliveros/ngSticky",
   "authors": [
-    "David Oliveros <dato.oliveros@gmail.com>"
+    "David Oliveros <dato.oliveros@gmail.com>",
+    "Jimmy Grand <grand.jimmy1@gmail.com>"
   ],
   "description": "A simple, pure javascript (No jQuery required!) AngularJS directive to make elements stick when scrolling down.",
   "main": "lib/sticky.js",

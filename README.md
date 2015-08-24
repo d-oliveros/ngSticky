@@ -26,6 +26,11 @@ as a dependency. Use the directive as follows:
 
     <div sticky> Hey there! </div>
 
+To toggle the element stickiness you can bind with scope using the disable-sticky (ng-model) as follows {{ disabled = true }}: 
+    
+    <div sticky disable-sticky="disabled"> I won't stick! </div>
+    <div sticky disable-sticky="!disabled"> I will stick! </div>
+
 To make the element stick within a certain offset of the top of the screen, you can provide an offset as follows:
 
     <div sticky offset="100"> I won't touch the top of your screen! </div>

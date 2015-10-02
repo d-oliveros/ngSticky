@@ -24,10 +24,13 @@
 			background-color: rgba(0, 0, 0, 0.1);
 			margin:0 50px 50px 0;
 		}
+		.clearfix {
+			clear: both;
+		}
 	</style>
 </head>
 
-<body ng-app="demo" style="min-height: 2000px;" ng-controller="demoCtrl">
+<body ng-app="demo" style="min-height: 2400px;" ng-controller="demoCtrl">
 
 	<div class="container">
 		<div class="sticky-box" style="background-color: blue; margin: 50px;" media-query="min-width: 768px" sticky confine="true">
@@ -62,6 +65,18 @@
 		left: 600px;<br>
 		top: 600px;
 		<button type="button" ng-click="disableSticking = !disableSticking" >Disable Sticking? {{ disableSticking }}</button>
+	</div>
+
+	<div class="clearfix"></div>
+
+	<div class="container">
+		<div class="sticky-box" style="background-color: blue; margin: 50px;" sticky confine="true">
+			Style:<br>
+			margin: 50px;<br>
+			<br>
+			Options:<br>
+			confine="true"
+		</div>
 	</div>
 
 	<div style="height: 1200px;"></div>

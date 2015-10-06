@@ -63,4 +63,6 @@ If you'd like to use an element's overflow-y instead of the window scrollbar.  Y
       <div sticky>Will stick to element, instead of window scrollbar.</div>
     </sticky-scroll>
 
+> NOTE: This doesn't work for bottomed out or position absolute elements.
+
 Cheers.

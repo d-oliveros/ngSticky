@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>Angular-Sticky Demo v1.7.9</title>
+  <title>Angular-Sticky Demo</title>
 
   <style>
     body {
@@ -18,7 +18,7 @@
       display: block;
       background-image: url(http://www.georgebenainous.com/web/code/layout_grid.gif);
 
-      height: 800px;
+      height: 500px;
       overflow-y: scroll;
     }
     .container {
@@ -60,22 +60,6 @@
       </div>
     </div>
 
-    <div class="sticky-box" style="position: absolute; top: 400px; left: 300px; background-color: red;" sticky>
-      Style:<br>
-      position: absolute;<br>
-      left: 300px;<br>
-      top: 400px;
-    </div>
-
-    <div class="sticky-box" style="position: absolute; top: 600px; left: 600px; background-color: grey;" sticky disabled-sticky="disableSticking">
-      Optional Sticky<br>
-      Style:<br>
-      position: absolute;<br>
-      left: 600px;<br>
-      top: 600px;
-      <button type="button" ng-click="disableSticking = !disableSticking" >Disable Sticking? {{ disableSticking }}</button>
-    </div>
-
     <div class="clearfix"></div>
 
     <div class="container">
@@ -88,26 +72,14 @@
       </div>
     </div>
 
+    <div class="container">
+      <div class="sticky-box" style="background-color: blue; margin: 50px;" sticky>
+        Style:<br>
+        margin: 50px;<br>
+      </div>
+    </div>
+
     <div style="height: 1200px;"></div>
-
-    <div class="sticky-box" style="background-color: green; margin: 50px;" sticky anchor="bottom" offset="0">
-      Style:<br />
-      margin: 50px<br />
-      <br />
-      Options:<br />
-      anchor="bottom"<br />
-      offset="0"<br />
-    </div>
-
-    <div class="sticky-box" style="background-color: green; margin:0; position: relative; left: 700px;" sticky anchor="bottom" offset="25" confine="true">
-      Style:<br />
-      position: relative<br />
-      left: 700px<br />
-      <br />
-      Options:<br />
-      anchor="bottom"<br />
-      offset="25"<br />
-    </div>
   </sticky-scroll>
 
   <aside role="scripts">

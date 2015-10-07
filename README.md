@@ -57,4 +57,12 @@ And if you want to confine an element to its parent, and let it 'bottom out', ju
 
 > NOTE: The confine attribute will automagically assign its parent a `position: relative` style in order to help with absolute positioning relative to the parent.
 
+If you'd like to use an element's overflow-y instead of the window scrollbar.  You can use the "sticky-scroll" element to denote an element styled to handle this.
+
+    <sticky-scroll style="overflow-y: scroll;min-height: 1000px;">
+      <div sticky>Will stick to element, instead of window scrollbar.</div>
+    </sticky-scroll>
+
+> NOTE: This doesn't work for bottomed out or position absolute elements.
+
 Cheers.

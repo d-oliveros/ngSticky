@@ -63,10 +63,15 @@ And if you want to confine an element to its parent, and let it 'bottom out', ju
 
 If you'd like to use an element's overflow-y instead of the window scrollbar.  You can use the "sticky-scroll" element to denote an element styled to handle this.
 
-    <sticky-scroll style="overflow-y: scroll;min-height: 1000px;">
+    <sticky-scroll style="overflow-y: scroll;min-height: 1000px;display: block;">
       <div sticky>Will stick to element, instead of window scrollbar.</div>
     </sticky-scroll>
 
 > NOTE: This doesn't work for bottomed out or position absolute elements.
+
+
+If your sticky content is having problems getting a height reset to 0 after unpinning, consider deferring the directive's calcuation of the defaults until a bit later. Use the attribute `is-sticky-layout-deferred="true"`.  Because there might be a rendering delay or Angular issue, it is often better to wait asynchronously until the dimensions are set on content.
+
+
 
 Cheers.

@@ -26,7 +26,7 @@ as a dependency. Use the directive as follows:
 
     <div sticky> Hey there! </div>
 
-To toggle the element stickiness you can bind with scope using the disable-sticky (ng-model) as follows {{ disabled = true }}: 
+To toggle the element stickiness you can bind with scope using the disable-sticky (ng-model) as follows `{{ disabled = true }}`:
     
     <div sticky disable-sticky="disabled"> I won't stick! </div>
     <div sticky disable-sticky="!disabled"> I will stick! </div>
@@ -59,7 +59,7 @@ And if you want to confine an element to its parent, and let it 'bottom out', ju
 
     <div sticky offset="100" confine="true"> Will unstick and stick to bottom of parent element</div>
 
-> NOTE: The confine attribute will automagically assign its parent a `position: relative` style in order to help with absolute positioning relative to the parent.
+> NOTE: The `confine` attribute will automagically assign its parent a `position: relative` style in order to help with absolute positioning relative to the parent.
 
 If you'd like to use an element's overflow-y instead of the window scrollbar.  You can use the "sticky-scroll" element to denote an element styled to handle this.
 
@@ -70,7 +70,8 @@ If you'd like to use an element's overflow-y instead of the window scrollbar.  Y
 > NOTE: This doesn't work for bottomed out or position absolute elements.
 
 
-If your sticky content is having problems getting a height reset to 0 after unpinning, consider deferring the directive's calcuation of the defaults until a bit later. Use the attribute `is-sticky-layout-deferred="true"`.  Because there might be a rendering delay or Angular issue, it is often better to wait asynchronously until the dimensions are set on content.
+### Demo
+There are various demo pages that showcase the potential of this widget under the `examples` folder. You may want to host these on a local webserver and serve via http.
 
 
 

@@ -11,9 +11,9 @@
     "angular": "^1.2.0"
   },
   "repository": {
-		"type": "git",
-		"url": "git@github.com:d-oliveros/ngSticky.git"
-	},
+    "type": "git",
+    "url": "git@github.com:d-oliveros/ngSticky.git"
+  },
   "keywords": [
     "angularjs",
     "angular",
@@ -33,8 +33,11 @@
     "test",
     "tests"
   ],
-	"engines": {
-		"node": ">=0.10",
-		"npm": ">=1.1.59"
-	}
+  "engines": {
+    "node": ">=0.10",
+    "npm": ">=1.1.59"
+  },
+  "devDependencies": {
+    "uglify-js": "^2.5.0"
+  }
 }

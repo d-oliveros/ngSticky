@@ -51,7 +51,6 @@ BODY {
 
 .scrolling-container {
     display: block;
-    background-image: url("../images/layout_grid.png");
     height: inherit;
     overflow-y: scroll;
 }

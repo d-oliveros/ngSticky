@@ -74,9 +74,20 @@ If you'd like to use an element's overflow-y instead of the window scrollbar.  Y
 > NOTE: This doesn't work for bottomed out or position absolute elements.
 
 
-### Demo
-There are various demo pages that showcase the potential of this widget under the `examples` folder. You may want to host these on a local webserver and serve via http.
+### Development
 
+To start the development server:
+
+```bash
+npm run examples
+// Then go to localhost:8080
+```
+
+To create the minified `dist/sticky.min.js` file, run:
+
+```bash
+npm run build
+```
 
 
 Cheers.

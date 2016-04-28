@@ -37,7 +37,7 @@ To make the element stick within a certain offset of the top of the screen, you 
 
 By default the element will be replaced with a place holder to prevent DOM resizing.  This can be disabled as follows:
 
-    <div sticky usePlaceholder="false">I won't be replaced!</div>
+    <div sticky use-placeholder="false">I won't be replaced!</div>
 
 If you want to customize the style while the element is sticky, we have an api for you too:
 

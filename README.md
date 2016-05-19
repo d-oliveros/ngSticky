@@ -34,6 +34,7 @@ To toggle the element stickiness you can bind with scope using the disabled-stic
 To make the element stick within a certain offset of the top of the screen, you can provide an offset as follows:
 
     <div sticky offset="100"> I won't touch the top of your screen! </div>
+    <div sticky offset="{{ offsetMeSometimes ? 50 : 0 }}"> I won't touch the top of your screen... sometimes! </div>
 
 By default the element will be replaced with a place holder to prevent DOM resizing.  This can be disabled as follows:
 

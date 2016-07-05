@@ -51,6 +51,10 @@ And if you want to add in a class when the element is confined and bottomed out:
 
     <div sticky offset="100" bottom-class="cantGoAnyFurther"> Taste my glue! </div>
 
+It's also possible to set styles specifically for non sticky element:
+
+    <div sticky unsticky-class="container--unsticky"></div>
+
 In order to enable sticky based on a media query:
 
     <div sticky media-query="min-width: 768px"> Won't be sticky on small screens! </div>

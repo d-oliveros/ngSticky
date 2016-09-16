@@ -1,7 +1,7 @@
 {
-  "name": "ngSticky",
-  "version": "1.8.10",
-  "homepage": "https://github.com/d-oliveros/ngSticky",
+  "name": "ngStickyPlaceholderFix",
+  "version": "1.8.14",
+  "homepage": "https://github.com/dejandujmovic/ngSticky.git",
   "authors": [
     "David Oliveros <dato.oliveros@gmail.com>",
     "Jimmy Grand <grand.jimmy1@gmail.com>"

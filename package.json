@@ -1,7 +1,7 @@
 {
   "name": "ngsticky",
   "version": "1.8.13",
-  "homepage": "https://github.com/d-oliveros/ngSticky",
+  "homepage": "https://github.com/rseigel/ngSticky",
   "authors": [
     "David Oliveros <dato.oliveros@gmail.com>"
   ],
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:d-oliveros/ngSticky.git"
+    "url": "git@github.com:rseigel/ngSticky.git"
   },
   "keywords": [
     "angularjs",

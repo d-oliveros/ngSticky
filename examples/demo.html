@@ -27,6 +27,12 @@
     .clearfix {
       clear: both;
     }
+    .blueBg {
+        background-color: blue !important;
+    }
+    .redBg {
+        background-color: red !important;
+    }
   </style>
 </head>
 
@@ -98,6 +104,14 @@
     Options:<br />
     anchor="bottom"<br />
     offset="25"<br />
+  </div>
+
+  <div class="sticky-box" style="position: absolute; top: 400px; left: 700px; background-color: grey;"
+       sticky disabled-sticky="disableSticking" sticky-class="blueBg" unsticky-class="redBg">
+       unsticky-class should be enabled on load<br />
+       <br />
+       unsticky-class: background-color: red<br />
+       sticky-class: background-color: blue<br />
   </div>
 
   <aside role="scripts">
